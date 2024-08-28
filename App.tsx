@@ -7,7 +7,9 @@ import {
 
 import { Loading } from "@components/Loading";
 
-import { Center, GluestackUIProvider, Text } from "@gluestack-ui/themed";
+import { SignIn } from "@screens/SignIn";
+
+import { Center, GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "./config/gluestack-ui.config";
 
 export default function App() {
@@ -20,8 +22,8 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      <Center style={{ flex: 1 }} bg="$gray700">
-        {fontsLoaded ? <Text>Home</Text> : <Loading />}
+      <Center flex={1} bg="$gray700">
+        {fontsLoaded ? <SignIn /> : <Loading />}
       </Center>
     </GluestackUIProvider>
   );
