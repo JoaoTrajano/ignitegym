@@ -1,5 +1,4 @@
 import { ComponentProps } from "react";
-
 import { Button, Text } from "@gluestack-ui/themed";
 
 type Props = ComponentProps<typeof Button> & {
@@ -7,7 +6,7 @@ type Props = ComponentProps<typeof Button> & {
   isActive: boolean;
 };
 
-export function GroupItem({ name, isActive, ...rest }: Props) {
+export function GroupCard({ name, isActive, ...rest }: Props) {
   return (
     <Button
       mr="$3"

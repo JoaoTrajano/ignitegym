@@ -1,5 +1,5 @@
 import { Header } from "@components/application";
-import { VStack, Text } from "@gluestack-ui/themed";
+import { VStack } from "@gluestack-ui/themed";
 
 export function History() {
   return (

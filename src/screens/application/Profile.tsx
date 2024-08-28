@@ -1,9 +1,10 @@
-import { Center, Text } from "@gluestack-ui/themed";
+import { Header } from "@components/application";
+import { VStack, Text } from "@gluestack-ui/themed";
 
 export function Profile() {
   return (
-    <Center flex={1}>
-      <Text>Profile</Text>
-    </Center>
+    <VStack flex={1}>
+      <Header title="Perfil" />
+    </VStack>
   );
 }

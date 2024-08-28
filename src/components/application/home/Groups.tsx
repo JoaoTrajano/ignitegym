@@ -1,7 +1,7 @@
 import { useState } from "react";
-
-import { GroupItem } from "@components/application";
 import { FlatList } from "react-native";
+
+import { GroupCard } from "@components/application/home/GroupCard";
 
 export function Groups() {
   const [groupSelected, setGroupSelected] = useState<string>("Costas");
@@ -13,7 +13,7 @@ export function Groups() {
       data={groups}
       keyExtractor={(item) => item}
       renderItem={({ item }) => (
-        <GroupItem
+        <GroupCard
           name={item}
           isActive={groupSelected.toUpperCase() === item.toUpperCase()}
           onPress={() => setGroupSelected(item)}
