@@ -3,9 +3,9 @@ import { useMemo } from "react";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 
 import { Box } from "@gluestack-ui/themed";
-import { AuthRoutes } from "@routes/auth.routes";
 
 import { config } from "../../config/gluestack-ui.config";
+import { ApplicationRoutes } from "@routes/application.routes";
 
 export function Routes() {
   const theme = useMemo(() => {
@@ -16,7 +16,7 @@ export function Routes() {
   return (
     <Box flex={1} bg="$gray700">
       <NavigationContainer theme={theme}>
-        <AuthRoutes />
+        <ApplicationRoutes />
       </NavigationContainer>
     </Box>
   );

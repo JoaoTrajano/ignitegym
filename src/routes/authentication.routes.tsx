@@ -14,7 +14,7 @@ export type AuthNavigatorRoutesProps =
 
 const { Navigator, Screen } = createNativeStackNavigator<AuthRoutesType>();
 
-export function AuthRoutes() {
+export function AuthenticationRoutes() {
   return (
     <Navigator initialRouteName="signIn" screenOptions={{ headerShown: false }}>
       <Screen name="signIn" component={SignIn} />

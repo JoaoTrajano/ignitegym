@@ -1,7 +1,7 @@
 import { VStack, Image, Center, Text, ScrollView } from "@gluestack-ui/themed";
 
 import { useNavigation } from "@react-navigation/native";
-import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
+import { AuthNavigatorRoutesProps } from "@routes/authentication.routes";
 
 import Logo from "@assets/logo.svg";
 import BackgroundImg from "@assets/background.png";
