@@ -6,7 +6,7 @@ import { ContentHistory } from "@components/application/history";
 export function History() {
   return (
     <VStack flex={1}>
-      <Header title="Histórico" />
+      <Header options={{ title: "Histórico" }} />
       <ContentHistory />
     </VStack>
   );

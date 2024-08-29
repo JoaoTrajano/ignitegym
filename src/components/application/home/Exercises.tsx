@@ -4,6 +4,8 @@ import { FlatList } from "react-native";
 import { Heading, HStack, Text, VStack } from "@gluestack-ui/themed";
 
 import { ExerciseCard } from "@components/application/home/ExerciseCard";
+import { useNavigation } from "@react-navigation/native";
+import { ApplicationNavigationProps } from "@routes/application.routes";
 
 export function Exercises() {
   const [exercises, setExercises] = useState<string[]>([
@@ -16,6 +18,12 @@ export function Exercises() {
     "Remada Frontal - 6",
     "Remada Unilateral - 7",
   ]);
+
+  const navigation = useNavigation<ApplicationNavigationProps>();
+
+  const handleGoExerciseDetails = () => {
+    navigation.navigate("exercise");
+  };
 
   return (
     <VStack px="$8" flex={1}>
@@ -30,7 +38,9 @@ export function Exercises() {
       <FlatList
         data={exercises}
         keyExtractor={(item) => item}
-        renderItem={({ item }) => <ExerciseCard />}
+        renderItem={({ item }) => (
+          <ExerciseCard onPress={handleGoExerciseDetails} />
+        )}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 32 }}
       />
