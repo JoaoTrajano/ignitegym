@@ -11,10 +11,15 @@ import { AuthNavigatorRoutesProps } from "@routes/authentication.routes";
 import Logo from "@assets/logo.svg";
 import BackgroundImg from "@assets/background.png";
 
+import { api } from "@services/api";
+
+import { AppError } from "@utils/AppError";
+
 import { Inputs } from "@config/types";
 import { Form } from "@components/Form";
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
+import Toast from "react-native-toast-message";
 
 type FormDataProps = {
   name: string;
@@ -65,8 +70,23 @@ export function SignUp() {
     navigation.goBack();
   };
 
-  const handleSignUp = (data: FormDataProps) => {
-    console.log(data);
+  const handleSignUp = async ({ name, email, password }: FormDataProps) => {
+    try {
+      const { data } = await api.post("/users", { name, email, password });
+    } catch (error) {
+      if (error instanceof AppError) {
+        Toast.show({
+          type: "error",
+          text1: "Ops!",
+          text2: error.messsage,
+          visibilityTime: 3000,
+          autoHide: true,
+          topOffset: 50,
+          onShow: () => {},
+          onHide: () => {},
+        });
+      }
+    }
   };
 
   return (

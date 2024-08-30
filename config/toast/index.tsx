@@ -13,6 +13,7 @@ const toastConfig = {
         borderLeftColor: "green",
         backgroundColor: "#1E1E1E",
         width: "95%",
+        padding: 16,
       }}
       contentContainerStyle={{ paddingHorizontal: 15 }}
       text1Style={{
@@ -37,9 +38,9 @@ const toastConfig = {
       style={{
         borderLeftColor: "red",
         backgroundColor: "#1E1E1E",
-        padding: 4,
         height: "auto", // Permite que a altura se ajuste ao conteúdo
         width: "95%",
+        padding: 16,
       }}
       text1Style={{
         fontSize: 18,
