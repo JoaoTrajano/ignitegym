@@ -34,7 +34,7 @@ const signInSchema = yup.object({
 });
 
 export function SignIn() {
-  const { signIn } = useAuth();
+  const { signIn, isLoading } = useAuth();
 
   const inputs: Inputs<FormDataProps>[] = useMemo(
     () => [
@@ -121,7 +121,11 @@ export function SignIn() {
                 )}
               />
             ))}
-            <Button title="Acessar" onPress={handleSubmit(handleSignIn)} />
+            <Button
+              title="Acessar"
+              onPress={handleSubmit(handleSignIn)}
+              isLoading={isLoading}
+            />
           </Form>
           <Center flex={1} justifyContent="flex-end" mt="$4">
             <Text color="$gray100" fontSize="$sm" mb="$3" fontFamily="$body">

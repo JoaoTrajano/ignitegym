@@ -7,6 +7,7 @@ import { UserDTO } from "@dtos/UserDTO";
 export type AuthContextDataProps = {
   user: UserDTO;
   signIn: (email: string, password: string) => Promise<void>;
+  isLoading: boolean;
 };
 
 type AuthContextProviderProps = {
@@ -19,19 +20,23 @@ export const AuthContext = createContext<AuthContextDataProps>(
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<UserDTO>({} as UserDTO);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const signIn = async (email: string, password: string): Promise<void> => {
     try {
+      setIsLoading(true);
       const { data } = await api.post("/sessions", { email, password });
 
       if (data.user) setUser(data.user);
     } catch (error) {
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, signIn }}>
+    <AuthContext.Provider value={{ user, signIn, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

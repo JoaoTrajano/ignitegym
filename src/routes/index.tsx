@@ -13,7 +13,6 @@ import { AuthenticationRoutes } from "@routes/authentication.routes";
 
 export function Routes() {
   const { user } = useAuth();
-  console.log(user);
 
   const theme = useMemo(() => {
     DefaultTheme.colors.background = config.tokens.colors.gray700;
@@ -23,7 +22,7 @@ export function Routes() {
   return (
     <Box flex={1} bg="$gray700">
       <NavigationContainer theme={theme}>
-        <AuthenticationRoutes />
+        {user.id ? <ApplicationRoutes /> : <AuthenticationRoutes />}
       </NavigationContainer>
     </Box>
   );

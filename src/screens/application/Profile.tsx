@@ -50,9 +50,7 @@ export function Profile() {
 
         setUri(photoUri);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   return (
     <VStack flex={1}>
