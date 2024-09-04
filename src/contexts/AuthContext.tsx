@@ -9,12 +9,22 @@ import {
 import { api } from "@services/api";
 
 import { UserDTO } from "@dtos/UserDTO";
-import { removeUser, saveUser, getUser } from "@storage/user";
+
+import {
+  storageGetToken,
+  storageRemoveToken,
+  storageSaveToken,
+} from "@storage/token";
+import {
+  storageRemoveUser,
+  storageSaveUser,
+  storageGetUser,
+} from "@storage/user";
 
 export type AuthContextDataProps = {
   user: UserDTO;
   signIn: (email: string, password: string) => Promise<void>;
-  logOut: () => Promise<void>;
+  signOut: () => Promise<void>;
   isLoading: boolean;
 };
 
@@ -37,8 +47,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         const { data } = await api.post("/sessions", { email, password });
 
         if (data.user && data.token) {
-          await saveUser(data.user);
-          setUser(data.user);
+          await saveDataUser(data.user as UserDTO, data.token);
         }
       } catch (error) {
         throw error;
@@ -49,11 +58,12 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     [],
   );
 
-  const logOut = useCallback(async (): Promise<void> => {
+  const signOut = useCallback(async (): Promise<void> => {
     try {
       setIsLoading(true);
 
-      await removeUser();
+      await storageRemoveUser();
+      await storageRemoveToken();
       setUser({} as UserDTO);
     } catch (error) {
       throw error;
@@ -62,17 +72,35 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }
   }, []);
 
-  const loadDataUserInTheStorage = useCallback(async () => {
-    const userStorage = await getUser();
-    if (userStorage) setUser(userStorage);
+  const updateDataUser = useCallback(async (user: UserDTO, token: string) => {
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+    setUser(user);
+  }, []);
+
+  const saveDataUser = useCallback(async (user: UserDTO, token: string) => {
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+    await storageSaveUser(user);
+    await storageSaveToken(token);
+
+    setUser(user);
+  }, []);
+
+  const loadUserDataInTheStorage = useCallback(async () => {
+    const userStorage = await storageGetUser();
+    const tokenStorage = await storageGetToken();
+
+    if (userStorage && tokenStorage)
+      await updateDataUser(userStorage, tokenStorage);
   }, []);
 
   useEffect(() => {
-    loadDataUserInTheStorage();
+    loadUserDataInTheStorage();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, signIn, logOut, isLoading }}>
+    <AuthContext.Provider value={{ user, signIn, signOut, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

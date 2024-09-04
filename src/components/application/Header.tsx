@@ -22,7 +22,7 @@ type Props = {
 
 export function Header({ options = {} }: Props) {
   const navigation = useNavigation<ApplicationNavigationProps>();
-  const { logOut } = useAuth();
+  const { signOut } = useAuth();
 
   return options.title && options.title !== "" ? (
     <>
@@ -81,7 +81,7 @@ export function Header({ options = {} }: Props) {
           João Trajano
         </Heading>
       </VStack>
-      <TouchableOpacity onPress={logOut}>
+      <TouchableOpacity onPress={signOut}>
         <Icon as={LogOut} color="$gray200" size="xl" />
       </TouchableOpacity>
     </HStack>
