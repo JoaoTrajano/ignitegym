@@ -9,6 +9,8 @@ import { ApplicationNavigationProps } from "@routes/application.routes";
 
 import BodySvg from "@assets/body.svg";
 
+import { useAuth } from "@hooks/useAuth";
+
 type Options = {
   title?: string;
   isGoBack?: boolean;
@@ -20,6 +22,7 @@ type Props = {
 
 export function Header({ options = {} }: Props) {
   const navigation = useNavigation<ApplicationNavigationProps>();
+  const { logOut } = useAuth();
 
   return options.title && options.title !== "" ? (
     <>
@@ -78,7 +81,9 @@ export function Header({ options = {} }: Props) {
           João Trajano
         </Heading>
       </VStack>
-      <Icon as={LogOut} color="$gray200" size="xl" />
+      <TouchableOpacity onPress={logOut}>
+        <Icon as={LogOut} color="$gray200" size="xl" />
+      </TouchableOpacity>
     </HStack>
   );
 }
