@@ -12,6 +12,8 @@ import { Loading } from "@components/Loading";
 
 import { Routes } from "@routes/index";
 
+import { AuthContext, AuthContextProvider } from "@contexts/AuthContext";
+
 import Toast from "react-native-toast-message";
 import toastConfig from "./config/toast";
 
@@ -26,7 +28,9 @@ export default function App() {
           backgroundColor="transparent"
           translucent
         />
-        {fontsLoaded ? <Routes /> : <Loading />}
+        <AuthContextProvider>
+          {fontsLoaded ? <Routes /> : <Loading />}
+        </AuthContextProvider>
         <Toast config={toastConfig} />
       </GluestackUIProvider>
     </>

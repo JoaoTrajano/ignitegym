@@ -13,9 +13,15 @@ import { Inputs } from "@config/types";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { useAuth } from "@hooks/useAuth";
+
+import { AppError } from "@utils/AppError";
+
 import { Form } from "@components/Form";
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
+
+import Toast from "react-native-toast-message";
 
 type FormDataProps = {
   email: string;
@@ -28,6 +34,8 @@ const signInSchema = yup.object({
 });
 
 export function SignIn() {
+  const { signIn } = useAuth();
+
   const inputs: Inputs<FormDataProps>[] = useMemo(
     () => [
       { name: "email", placeholder: "E-mail", inputType: "email" },
@@ -46,8 +54,23 @@ export function SignIn() {
 
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
-  const handleSignIn = (data: FormDataProps) => {
-    console.log(data);
+  const handleSignIn = async ({ email, password }: FormDataProps) => {
+    try {
+      await signIn(email, password);
+    } catch (error) {
+      if (error instanceof AppError) {
+        Toast.show({
+          type: "error",
+          text1: "Ops!",
+          text2: error.messsage,
+          visibilityTime: 3000,
+          autoHide: true,
+          topOffset: 50,
+          onShow: () => {},
+          onHide: () => {},
+        });
+      }
+    }
   };
 
   const handleGoSignUp = () => {
