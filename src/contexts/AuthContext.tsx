@@ -3,6 +3,7 @@ import { createContext, ReactNode, useState } from "react";
 import { api } from "@services/api";
 
 import { UserDTO } from "@dtos/UserDTO";
+import { saveUser } from "@storage/user";
 
 export type AuthContextDataProps = {
   user: UserDTO;
@@ -27,7 +28,10 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       setIsLoading(true);
       const { data } = await api.post("/sessions", { email, password });
 
-      if (data.user) setUser(data.user);
+      if (data.user && data.token) {
+        await saveUser(data);
+        setUser(data.user);
+      }
     } catch (error) {
       throw error;
     } finally {
